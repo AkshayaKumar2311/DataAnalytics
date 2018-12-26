@@ -35,3 +35,11 @@ plt.title('Title for the Chart')
 plt.xlabel('Independent Variable')
 plt.ylabel('Dependent Variable')
 plt.show()
+
+# Visualising the Test set results
+plt.scatter(X_train, y_train, color = 'red')
+plt.plot(X_test, regressor.predict(X_test), color = 'blue')
+plt.title('Title for the Chart')
+plt.xlabel('Independent Variable')
+plt.ylabel('Dependent Variable')
+plt.show()
