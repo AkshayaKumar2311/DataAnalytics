@@ -1,0 +1,33 @@
+# Importing the dataset
+dataset = read.csv('Your Data Set To be uploaded')
+
+# Splitting the dataset into the Training set and Test set
+install.packages('caTools')
+library(caTools)
+set.seed(123)
+#80% in train and rest in test
+split = sample.split(dataset$DependentVariable, SplitRatio = 0.8) 
+training_set = subset(dataset, split == TRUE)
+test_set = subset(dataset, split == FALSE)
+
+# Feature Scaling
+training_set = scale(training_set)
+test_set = scale(test_set)
+
+# Taking care of missing data
+dataset$NumbericalData = ifelse(is.na(dataset$NumbericalData),
+                     ave(dataset$NumbericalData, FUN = function(x) mean(x, na.rm = TRUE)),
+                     dataset$NumbericalData)
+
+# Encoding categorical data
+dataset$CategoricalData = factor(dataset$CategoricalData,
+                         levels = c('XXXXXX11111', 'XXXXXX22222', 'XXXXXX33333'),
+                         labels = c(1, 2, 3))
+
+# Fitting Simple Linear Regression to the Training set
+Simple_Linear_regressor = lm(formula = DependentVariable ~ independentVariable,
+               data = training_set)
+
+
+# Predicting the Test set results
+y_pred = predict(Simple_Linear_regressor , newdata = test_set)
